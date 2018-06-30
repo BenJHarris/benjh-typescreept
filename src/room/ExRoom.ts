@@ -1,4 +1,4 @@
-export abstract class exRoom {
+export abstract class ExRoom {
 
     private room: Room;
 
@@ -75,7 +75,13 @@ export abstract class exRoom {
     }
 
     public lookForAt<T extends keyof AllLookAtTypes>(type: T, target: RoomPosition | _HasRoomPosition): AllLookAtTypes[T][] {
-        return this.lookForAt(type, target);
+        return this.room.lookForAt(type, target);
     }
+
+    public lookForAtArea<T extends keyof AllLookAtTypes>(type: T, top: number, left: number, bottom: number, right: number, asArray?: false): LookForAtAreaResultMatrix<AllLookAtTypes[T], T> {
+        return this.room.lookForAtArea(type, left, bottom, right, right, asArray);
+    }
+
+
 
 }

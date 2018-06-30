@@ -3,3 +3,5 @@
 declare const require: (module: string) => any;
 
 // add your custom typings here
+
+declare let global: { [k: string]: any };

@@ -1,28 +1,26 @@
-import { exCreep } from 'wrappers/exCreep'
+import { ExCreep } from 'creep/ExCreep'
+import { OwnedRoom } from 'room/OwnedRoom'
 
 /**
  * Role wil be a wrapper for a creep with a specified purpose
  */
-export abstract class Role extends exCreep {
+export abstract class Role extends ExCreep {
 
     constructor(creep: Creep) {
         super(creep);
         this.initialiseMemory();
-        let home = this.home;
-        if (home.controller !== undefined) {
-            this.run(home.controller.level);
-        }
     }
 
     public initialiseMemory(): void {
         throw new Error('initialiseMemory() must be overriden on all role classes');
     }
 
-    public get home(): Room {
-        return Game.getObjectById(this.memory.home) as Room;
+    public get home(): OwnedRoom {
+        return global.empire.getRoomByName(this.memory.home) as OwnedRoom;
     }
 
-    public run(level: number): void {
+    public run(): void {
+        const level = this.home.controller.level;
         if (level === 1) {
             this.runOne();
         } else if (level === 2) {

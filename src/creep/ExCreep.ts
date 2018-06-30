@@ -1,6 +1,6 @@
-import { Traveler } from 'utils/Traveler'
+import { Traveler } from 'traveler/Traveler'
 
-export abstract class exCreep {
+export abstract class ExCreep {
 
     private creep: Creep;
 

@@ -6,7 +6,11 @@ export class Harvester extends Role {
         super(creep);
     }
 
-    run(): void {
-        this.moveTo(new RoomPosition(0, 0, this.room.name));
+    initialiseMemory() {
+
+    }
+
+    runOne(): void {
+        console.log('a');
     }
 }
