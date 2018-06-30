@@ -1,0 +1,3 @@
+interface RoleMemory {
+    roleName: string;
+}
