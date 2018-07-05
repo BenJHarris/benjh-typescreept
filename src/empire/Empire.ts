@@ -1,7 +1,11 @@
 import { Role } from 'roles/Role'
 import { Harvester } from 'roles/Harvester'
-import { OwnedRoom } from 'room/OwnedRoom'
 import { ExRoom } from 'room/ExRoom'
+import { MyRoom } from 'room/MyRoom';
+import { ControllerRoom } from 'room/ControllerRoom';
+import { EnemyRoom } from 'room/EnemyRoom';
+import { EmptyRoom } from 'room/EmptyRoom';
+import { UnoccupiedRoom } from 'room/UnoccupiedRoom';
 
 export class Empire {
 
@@ -12,7 +16,17 @@ export class Empire {
                 creepList: {[creepName: string]: Creep}) {
         //add rooms from Game.rooms
         for (let rn in roomList) {
-            this.rooms.push(new OwnedRoom(roomList[rn]));
+            let room: Room = roomList[rn];
+
+            if (room.controller && room.controller.my) {
+                this.rooms.push(new MyRoom(room));
+            } else if (room.controller && !room.controller.my && room.controller.owner === undefined) {
+                this.rooms.push(new UnoccupiedRoom(room));
+            } else if (room.controller && !room.controller.my && room.controller.owner !== undefined) {
+                this.rooms.push(new EnemyRoom(room));
+            } else {
+                this.rooms.push(new EmptyRoom(room));
+            }
         }
 
         //add creeps from Game.creeps
@@ -45,8 +59,6 @@ export class Empire {
     }
 
     run(): void {
-        global.empire = this;
-
         for (let role of this.roles) {
             role.run();
         }

@@ -1,12 +1,18 @@
-import { ExRoom } from './ExRoom';
+import { ControllerRoom } from './ControllerRoom';
 
-export class OwnedRoom extends ExRoom {
+export abstract class OwnedRoom extends ControllerRoom {
+
+    public spawns: StructureSpawn[];
 
     constructor(room: Room) {
         super(room);
+
+        this.spawns = this.findSpawns();
     }
 
-    public get controller(): StructureController {
-        return super.controller as StructureController;
+    public findSpawns(): StructureSpawn[] {
+        return this.find(FIND_STRUCTURES, {
+            filter: s => s.structureType === STRUCTURE_SPAWN
+        }) as StructureSpawn[];
     }
 }

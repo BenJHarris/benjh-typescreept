@@ -9,14 +9,6 @@ import { Empire } from 'empire/Empire';
 export const loop = ErrorMapper.wrapLoop(() => {
   console.log(`Current game tick is ${Game.time}`);
 
-  for (let spawnName in Game.spawns) {
-    let spawn = Game.spawns[spawnName];
-    spawn.spawnCreep([MOVE, WORK, CARRY], 'a', {memory: {
-      role: {
-        roleName: 'harvester'
-      },
-      home: spawn.room.name
-    }});
-  }
-  new Empire(Game.rooms, Game.creeps);
+  global.empire = new Empire(Game.rooms, Game.creeps);
+  global.empire.run();
 });

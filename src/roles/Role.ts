@@ -41,7 +41,7 @@ export abstract class Role extends ExCreep {
     }
 
     public runOne(): void {
-        throw new Error('called run must be overidden on all roll classes');
+        throw new Error('run() must be overidden on all roll subclasses');
     }
 
     public runTwo = this.runOne;
